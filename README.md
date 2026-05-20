@@ -54,6 +54,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **Azure Boards** — Jira-equivalent tightly bound to the Azure DevOps suite and Git repos.
 
+**GitHub Projects** — A lightweight planning layer built into GitHub. How it works: it pulls issues and pull requests directly from your repos into a customizable table/board/roadmap view, so planning lives next to the code without a separate tool.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -66,6 +67,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **Confluence / Notion** — Wiki-style knowledge bases; pages are stored as structured documents and version-tracked so teams have a durable "source of truth" separate from chat.
 
+**Mattermost** — An open-source, self-hostable Slack alternative. How it works: same channel/webhook/bot model, but you run it on your own servers — favored where data residency or on-prem control matters.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -76,6 +78,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **GitHub / GitLab / Bitbucket** — Hosted platforms wrapping Git with collaboration features: pull/merge requests, code review, permissions, and built-in CI. GitLab bundles the most (repo + CI + registry + issues) in one app; GitHub is the largest ecosystem; Bitbucket integrates tightly with Atlassian/Jira.
 
+**Azure Repos** — Git (or legacy TFVC) hosting inside Azure DevOps. How it works: standard Git remotes with pull requests and branch policies, tightly integrated with Azure Pipelines and Boards.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -90,6 +93,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **CircleCI / Travis CI** — Cloud-hosted CI services configured by YAML, similar model to GitHub Actions.
 
+**TeamCity** — JetBrains' self-hosted CI server. How it works: a server coordinates *build agents* that run configured build steps; it's known for strong build-chain dependencies, caching, and first-class test reporting.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -102,6 +106,11 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **Flux** — Like Argo CD, a Kubernetes GitOps reconciler, but lighter and more controller-native (no built-in UI by default).
 
+**GitHub Actions (as CD)** — The same workflow engine used for CI (see #4) also deploys: a job triggered on merge or release builds artifacts and pushes them to a target (cloud, registry, or cluster), often using *environments* with required approvals for production gates.
+
+**GitLab CD** — The deploy half of GitLab CI/CD. How it works: later *stages* in `.gitlab-ci.yml` (e.g. `deploy`) run after build/test pass, using *environments* and manual-approval gates to release to staging/production.
+
+**Octopus Deploy** — A release-management tool that picks up *after* the build. How it works: it takes built artifacts and promotes them through environment-specific deployment processes with variable substitution, approvals, and runbooks — strong in Windows/.NET and multi-environment release governance.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -114,6 +123,9 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **Bazel** — Google's build system; hermetic, content-addressed, and heavily cached for huge monorepos — it knows the exact inputs to every build step so it can skip and parallelize aggressively.
 
+**Apache Ant** — An older XML-driven Java build tool. How it works: `build.xml` defines *targets* and *tasks* imperatively (you script each step), giving fine control but no built-in dependency management (often paired with Ivy).
+
+**MSBuild** — Microsoft's build engine for .NET. How it works: project files (`.csproj`) are XML build scripts MSBuild executes to compile, restore NuGet packages, and produce binaries; it's what Visual Studio and `dotnet build` use under the hood.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -126,6 +138,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **npm registry / PyPI** — Language package indexes; clients resolve a dependency tree from a manifest (`package.json`, `requirements.txt`) and download versioned tarballs.
 
+**GitHub Packages** — A registry built into GitHub for npm, NuGet, Maven, Docker images, and more. How it works: packages are published and versioned alongside your repo using the same GitHub auth and permissions, so artifacts inherit your existing access control.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -136,6 +149,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **ESLint / Pylint / Ruff** — Linters that parse code to an AST and apply configurable rules; Ruff is notable for being written in Rust, so it's extremely fast on large Python codebases.
 
+**CodeClimate / Codacy** — Hosted code-quality SaaS platforms. How they work: they connect to your repo, run static analysis on each PR, and report maintainability, duplication, complexity, and coverage trends as a quality grade — similar to SonarQube but fully managed.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -148,6 +162,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **JMeter / k6** — Load-testing tools that generate many concurrent virtual users to measure throughput and latency under stress.
 
+**Postman** — An API testing and development tool. How it works: you define requests in *collections*, write JavaScript assertions on responses, and run them manually or via the `newman` CLI in CI — covering contract/integration testing of REST APIs.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -172,6 +187,9 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **OpenShift** — Red Hat's enterprise Kubernetes distribution with added security, build, and developer tooling.
 
+**Nomad** — HashiCorp's simpler orchestrator. How it works: a single binary schedules not just containers but also VMs and plain binaries across a cluster; lighter than Kubernetes, often paired with Consul and Vault.
+
+**Amazon ECS / EKS** — AWS's managed orchestration. ECS is AWS's own container scheduler (simpler, AWS-native); EKS is managed *Kubernetes* (AWS runs the control plane, you run workloads). How it works: both integrate with AWS networking, IAM, and load balancers so you skip operating the control plane yourself.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -184,6 +202,9 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **CloudFormation** — AWS-native IaC using JSON/YAML templates managed as *stacks*.
 
+**OpenTofu** — A community, open-source fork of Terraform (created after Terraform's license change). How it works: it's a drop-in replacement using the same HCL and state model, governed by the Linux Foundation.
+
+**Crossplane** — IaC done *through* Kubernetes. How it works: cloud resources are expressed as Kubernetes custom resources, and in-cluster controllers reconcile them against the cloud provider — so the same kubectl/GitOps flow that runs apps also provisions infrastructure.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -208,6 +229,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **SOPS** — Encrypts values inside config/Git files so secrets can live in version control safely (encrypted), decrypted only at deploy time.
 
+**Doppler** — A SaaS secrets manager focused on developer workflow. How it works: secrets are organized per project/environment in a central dashboard and synced to apps, CI, and clusters via CLI, SDKs, or integrations — a managed alternative to running Vault yourself.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -218,6 +240,9 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **Linkerd** — Lighter, simpler mesh with a purpose-built Rust micro-proxy; lower overhead, fewer features than Istio.
 
+**Consul Connect** — HashiCorp's service mesh built on Consul's service registry. How it works: it adds sidecar proxies and automatic mutual TLS on top of Consul's existing service discovery, so identity and connectivity share one system.
+
+**Cilium** — An eBPF-based mesh/networking layer. How it works: instead of per-pod sidecars, it programs the Linux kernel directly via eBPF to enforce networking, security policy, and observability — lower overhead than sidecar meshes.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -254,6 +279,9 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **Splunk** — Powerful enterprise log analytics platform; ingests any machine data and indexes it for search and correlation.
 
+**Fluentd / Fluent Bit** — Log *collectors/forwarders* (not stores). How they work: they tail logs from files/containers, parse and enrich them into structured records, and route them to destinations (Elasticsearch, Loki, S3). Fluent Bit is the lightweight edition for edge/container use.
+
+**Graylog** — An open-source centralized log management platform. How it works: it ingests logs (often via syslog/GELF), stores them in Elasticsearch/OpenSearch, and provides search, dashboards, and alerting in one package.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -264,6 +292,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **PagerDuty / Opsgenie** — On-call platforms: they hold escalation policies and on-call schedules, then page the right person (push, SMS, call) and escalate if unacknowledged, tracking the incident lifecycle.
 
+**VictorOps (Splunk On-Call)** — An incident-response/on-call platform. How it works: like PagerDuty, it routes alerts through on-call schedules and escalation policies, with a timeline view to coordinate responders during an incident.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -278,6 +307,9 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **SonarQube / Checkmarx / Bandit** — SAST: analyze source code statically for security flaws (Bandit is Python-specific).
 
+**Aqua** — A container/cloud-native security platform. How it works: it scans images for vulnerabilities and enforces runtime policies (blocking anomalous container behavior), covering the full image lifecycle from build to runtime.
+
+**Dependabot** — GitHub's automated dependency updater. How it works: it watches your manifests for outdated or vulnerable dependencies and opens pull requests to bump versions, surfacing security advisories automatically.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -300,6 +332,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **DigitalOcean** — Simpler, developer-friendly cloud with predictable pricing; fewer services but lower complexity.
 
+**Oracle Cloud (OCI)** — Oracle's public cloud. How it works: same on-demand, API-driven model as the others; differentiated by strong Oracle Database integration and competitive pricing for high-performance compute and egress.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -308,6 +341,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **Argo CD / Flux** — GitOps controllers (see also #5). How it works: the principle is that Git holds the *entire* desired state of the system, and an in-cluster agent continuously reconciles the live cluster to match Git. Deployments become `git push`; rollbacks become `git revert`. Drift (manual changes) is automatically corrected, giving an auditable, declarative deployment model.
 
+**Jenkins X** — Opinionated CI/CD + GitOps for Kubernetes. How it works: it wires Jenkins/Tekton pipelines together with GitOps promotion (using a controller that syncs environments from Git), automating the path from commit to Kubernetes deployment.
 [⬆ Back to index](#part-1--component-index)
 
 ---
@@ -316,6 +350,7 @@ For each component below: **what the leading tools are** and **how they work**. 
 
 **LaunchDarkly / Unleash / Flagsmith** — Feature-flag platforms. How it works: flags are evaluated at runtime via an SDK in your app; the platform pushes flag state (often via streaming) so toggling a flag instantly changes behavior for targeted users or percentages — *without a redeploy*. This decouples deploying code from releasing a feature, enabling canary and A/B rollouts. Unleash is open-source/self-hostable; LaunchDarkly is the SaaS leader.
 
+**Split.io** — A feature-flag and experimentation platform. How it works: like LaunchDarkly, SDKs evaluate flags at runtime, but it adds strong *experimentation* — tying flag exposure to metrics so you can measure a feature's impact statistically (A/B testing with significance).
 [⬆ Back to index](#part-1--component-index)
 
 ---
